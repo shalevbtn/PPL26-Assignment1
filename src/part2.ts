@@ -9,14 +9,7 @@ export const countVowels: (s: string) => number = (s) => stringToArray(s).filter
 
 
 /* Question 2.2 */
-export const isPalindrome = (text: string): boolean => {
-    const cleanText: string = text.toLowerCase();
-    const isAlphaNumeric: (char: string) => boolean = (char: string) => /[a-z0-9]/.test(char);
-    const chars: string[] = stringToArray(cleanText);
-    const fixedChars: string[] = R.filter(isAlphaNumeric, chars);
-    const reversedChars: string = R.reduceRight((acc:string, char: string) => char + acc, "", fixedChars)
-    return fixedChars.join('') === reversedChars;
-};
+export const isPalindrome = (text: string): boolean => undefined as any;;
   
 
 /* Question 2.3 */
@@ -25,4 +18,6 @@ export type WordTree = {
     children: WordTree[];
 }
 
-export const treeToSentence = (t: WordTree): string => R.reduce()
+export const treeToSentence = (t: WordTree): string => t.root + t.children.reduce((acc: string, curr: WordTree) => {
+    return acc + " " + treeToSentence(curr);
+},"");
