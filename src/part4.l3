@@ -1,26 +1,81 @@
+#lang racket
+
+; Signature: last-item(lst)
+; Type: [List(T) -> T]
+; Purpose: to find last element in a list
+; Pre-conditions: lst is a list
+; Tests: (last-item '(1 2 3)) => 3
+;        (last-item '(1 (2 3) (4 5))) => (4 5)
+
 (define last-item
   (λ (lst)
-    (if (empty? (cdr lst)
+    (if (empty? (cdr lst))
       (car lst)
       (last-item (cdr lst))
-    )))
+    )
+  )
+)
+
+
+; Signature: remove-last-item(lst)
+; Type: [List(T) -> List(T)]
+; Purpose: to remove the last item of a list
+; Pre-conditions: lst is a list
+;                 lst is not empty
+; Tests: (remove-last-item '(1 2 3)) => '(1 2)
+;        (remove-last-item '(1 (2 3) (4 5))) => '(1 (2 3))
 
 (define remove-last-item
   (λ (lst)
     (if (empty? (cdr lst))
     '()
     (cons (car lst) (remove-last-item (cdr lst))))
-  ))
+  )
+)
+
+; Signature: rotate-nth(lst n)
+; Type: [List(T) Number -> List(T)]
+; Purpose: to rotate a list n times
+; Pre-conditions: n >= 0
+;                 n is a Number
+;                 lst is a List
+; Tests: (rotate-nth '(1 2 3) 1) => '(3 1 2)
+;        (rotate-nth '(1 (2 3) (4 5)) 3) => '(1 (2 3) (4 5))
+;        (rotate-nth '() 5) => '()
 
 (define rotate-nth
   (λ (lst n)
-   (if (= n 0)
-      lst
-      (rotate-nth (cons (last-item lst)
-      (remove-last-item lst)) (- n 1))
-   ))
+    (if (empty? lst)
+      (list)
+      (if (= n 0)
+        lst
+        (rotate-nth (cons (last-item lst)
+          (remove-last-item lst)) (- n 1))
+    )
+   )
+  )
+)
 
-   
+; Signature: deep-reverse(lst)
+; Type: List(T) -> List[T]
+; Purpose: to return a list with all elements reversed at every level of nesting.
+; Pre-conditions: lst is a List
+; Tests: (deep-reverse '(1 2 3)) => (3 2 1)
+;        (deep-reverse '(1 (2 3) (4 5))) => ((5 4) (3 2) 1)
+;        (deep-reverse '()) => ()
+
 (define deep-reverse
-  (λ (l)
-    'todo))
+  (λ (lst)
+    (if (list? lst)
+      (if (empty? lst)
+        (list)
+        (cons (deep-reverse (cdr lst)) (deep-reverse (car lst)))
+      )
+      lst
+    )
+  )
+)
+
+(deep-reverse '(1 2 3)) ; => (3 2 1)
+;(deep-reverse '(1 (2 3) (4 5))) ; => ((5 4) (3 2) 1)
+;(deep-reverse '()) ; => ()
