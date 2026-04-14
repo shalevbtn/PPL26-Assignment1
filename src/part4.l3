@@ -11,10 +11,7 @@
   (λ (lst)
     (if (empty? (cdr lst))
       (car lst)
-      (last-item (cdr lst))
-    )
-  )
-)
+      (last-item (cdr lst)))))
 
 
 ; Signature: remove-last-item(lst)
@@ -29,9 +26,7 @@
   (λ (lst)
     (if (empty? (cdr lst))
     '()
-    (cons (car lst) (remove-last-item (cdr lst))))
-  )
-)
+    (cons (car lst) (remove-last-item (cdr lst))))))
 
 ; Signature: rotate-nth(lst n)
 ; Type: [List(T) Number -> List(T)]
@@ -50,11 +45,7 @@
       (if (= n 0)
         lst
         (rotate-nth (cons (last-item lst)
-          (remove-last-item lst)) (- n 1))
-    )
-   )
-  )
-)
+          (remove-last-item lst)) (- n 1))))))
 
 ; Signature: deep-reverse(lst)
 ; Type: List(T) -> List[T]
@@ -69,13 +60,32 @@
     (if (list? lst)
       (if (empty? lst)
         (list)
-        (cons (deep-reverse (cdr lst)) (deep-reverse (car lst)))
+        (if (eq? (cdr lst) (list))
+          (deep-reverse (car lst))
+          (cons (deep-reverse (cdr lst)) (cons (deep-reverse (car lst)) (list)))
+        )
       )
-      lst
-    )
-  )
-)
+      lst)))
 
-(deep-reverse '(1 2 3)) ; => (3 2 1)
-;(deep-reverse '(1 (2 3) (4 5))) ; => ((5 4) (3 2) 1)
-;(deep-reverse '()) ; => ()
+
+(deep-reverse '(1 2 3)) ; => '(3 2 1)
+(deep-reverse '(1 (2 3) (4 5))) ; => '((5 4) (3 2) 1)
+(deep-reverse '()) ; => '()
+
+
+(define reverse-helper
+  (λ (lst acc)
+    (if (empty? lst)
+        acc
+        (reverse-helper (cdr lst) 
+                        (cons (deep-reverse2 (car lst)) acc)))))
+
+(define deep-reverse2
+  (λ (lst)
+    (if (list? lst)
+        (reverse-helper lst (list))
+        lst)))
+
+(deep-reverse2 '(1 2 3)) ; => '(3 2 1)
+(deep-reverse2 '(1 (2 3) (4 5))) ; => '((5 4) (3 2) 1)
+(deep-reverse2 '()) ; => '()
