@@ -15,7 +15,7 @@
 
 
 ; Signature: remove-last-item(lst)
-; Type: [List<T>] -> List<T>]
+; Type: [List<T>] -> List<T>
 ; Purpose: to remove the last item of a list
 ; Pre-conditions: lst is a list
 ;                 lst is not empty
