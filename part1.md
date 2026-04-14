@@ -69,10 +69,10 @@ Write the new function under the name `getDiscountedProductAveragePriceFP`.
 
 ```ts
 const getDiscountedProductAveragePriceFP = (inventory: Product[]): number => {
-    const discountedProducts : Product[] = inventory.filter((p: Product) => p.discounted);
-    const discountedPrices : number[] = map((p: Product) => p.price, discountedProducts);
-    const totalPrice : number = reduce((total: number, p: number) => total + p, 0, discountedPrices);
-    return discountedProducts.length === 0 ? 0 :totalPrice / discountedProducts.length;
+    const discountedProducts: Product[] = inventory.filter((p: Product) => p.discounted);
+    const discountedPrices: number[] = discountedProducts.map((p: Product) => p.price);
+    const totalPrice: number = discountedPrices.reduce((total: number, p: number) => total + p, 0);
+    return discountedProducts.length === 0 ? 0 : totalPrice / discountedProducts.length;
 }
 ```
 
