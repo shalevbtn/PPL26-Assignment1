@@ -57,34 +57,12 @@
 
 (define deep-reverse
   (λ (lst)
-    (if (list? lst)
-      (if (empty? lst)
+    (if (empty? lst)
         (list)
-        (if (eq? (cdr lst) (list))
-          (deep-reverse (car lst))
-          (cons (deep-reverse (cdr lst)) (cons (deep-reverse (car lst)) (list)))
-        )
-      )
-      lst)))
+        (if (list? (last-item lst))
+             (cons (deep-reverse (last-item lst)) (deep-reverse (remove-last-item lst)))
+             (cons (last-item lst) (deep-reverse (remove-last-item lst)))))))
 
 (deep-reverse '(1 2 3)) ; => '(3 2 1)
 (deep-reverse '(1 (2 3) (4 5))) ; => '((5 4) (3 2) 1)
 (deep-reverse '()) ; => '()
-
-
-(define reverse-helper
-  (λ (lst acc)
-    (if (empty? lst)
-        acc
-        (reverse-helper (cdr lst) 
-                        (cons (deep-reverse2 (car lst)) acc)))))
-
-(define deep-reverse2
-  (λ (lst)
-    (if (list? lst)
-        (reverse-helper lst (list))
-        lst)))
-
-(deep-reverse2 '(1 2 3)) ; => '(3 2 1)
-(deep-reverse2 '(1 (2 3) (4 5))) ; => '((5 4) (3 2) 1)
-(deep-reverse2 '()) ; => '()
