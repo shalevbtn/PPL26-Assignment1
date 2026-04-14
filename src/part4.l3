@@ -1,7 +1,7 @@
 #lang racket
 
 ; Signature: last-item(lst)
-; Type: [List(T) -> T]
+; Type: [List<T>] -> T
 ; Purpose: to find last element in a list
 ; Pre-conditions: lst is a list
 ; Tests: (last-item '(1 2 3)) => 3
@@ -15,7 +15,7 @@
 
 
 ; Signature: remove-last-item(lst)
-; Type: [List(T) -> List(T)]
+; Type: [List<T>] -> List<T>]
 ; Purpose: to remove the last item of a list
 ; Pre-conditions: lst is a list
 ;                 lst is not empty
@@ -29,7 +29,7 @@
     (cons (car lst) (remove-last-item (cdr lst))))))
 
 ; Signature: rotate-nth(lst n)
-; Type: [List(T) Number -> List(T)]
+; Type: [List<T> * Number] -> List<T>
 ; Purpose: to rotate a list n times
 ; Pre-conditions: n >= 0
 ;                 n is a Number
@@ -48,7 +48,7 @@
           (remove-last-item lst)) (- n 1))))))
 
 ; Signature: deep-reverse(lst)
-; Type: List(T) -> List[T]
+; Type: [List<T>] -> List<T>
 ; Purpose: to return a list with all elements reversed at every level of nesting.
 ; Pre-conditions: lst is a List
 ; Tests: (deep-reverse '(1 2 3)) => (3 2 1)
@@ -66,7 +66,6 @@
         )
       )
       lst)))
-
 
 (deep-reverse '(1 2 3)) ; => '(3 2 1)
 (deep-reverse '(1 (2 3) (4 5))) ; => '((5 4) (3 2) 1)
